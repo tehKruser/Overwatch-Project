@@ -1,5 +1,6 @@
-body, html {
+html, body  {
 	font-family: 'Roboto Condensed', sans-serif;
+	min-height: 100% !important;
 	height: 100%;
 	
 }
@@ -15,9 +16,9 @@ body, html {
 	width: 12%;
 	min-width: 260px;
 	max-width: 280px;
-	height: 100%;
-	padding: 0 20px;
+	height: 5000px;
 	float: left;
+	padding: 0 20px;
 }
 
 h1 {
