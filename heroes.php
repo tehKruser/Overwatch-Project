@@ -14,35 +14,31 @@ if($mysqli->connect_errno){
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Overwatch Database Heroes</title>
+  <title>Overwatch Database: Heroes</title>
   <link rel="stylesheet" href="style-home.css" type="text/css">
   
 </head>
 <body>
 <div class='header_bar'>
-	<h1>Overwatch Database Heroes</h1>
+	<h1>Overwatch Database: Heroes</h1>
 </div>
 
 <div class='nav_bar'>
-
-<ul>
-	<li><a href='index.html'>Main Menu</a></li>
-	<li><a href='heroes.php' class='active'>Heroes</a></li>
-	<li><a href='#'>Option 2</a></li>
-	<li><a href='#'>Option 3</a></li>
-	<li><a href='#'>Option 4</a></li>
-	<li><a href='#'>Option 5</a></li>
-<ul>
+	<ul>
+		<li><a href='index.html'>Main Menu</a></li>
+		<li><a href='heroes.php' class='active'>Heroes</a></li>
+		<li><a href='players.php'>Players</a></li>
+	<ul>
 </div>
 
 <div>
 	<!--http://overwatch.guide/!-->
 	<table class='entity_tbl'>
 		<tr>
-			<th>Name</td>
-			<th>Occupation</td>
-			<th>Role</td>
-			<th>Skill Difficulty</td>
+			<th>Name</th>
+			<th>Occupation</th>
+			<th>Role</th>
+			<th>Skill Difficulty</th>
 		</tr>
 
 <?php
@@ -93,7 +89,7 @@ $stmt->close();
 	<form method="post" action="heroes_update.php">
 		<fieldset>
 			<legend>Hero to Update from Table</legend>
-				<select name="Name">
+				<p><select name="Name">
 					
 					<?php
 					if(!($stmt = $mysqli->prepare("SELECT ow_heroes.name FROM ow_heroes"))){
@@ -112,18 +108,18 @@ $stmt->close();
 					$stmt->close();
 					?>
 					
-				</select>
+				</select></p>
 				<fieldset>
 					<legend>Hero Details</legend>
 					<p>Name: <input type="text" name="NameNew" /></p>
 					<p>Occupation: <input type="text" name="Occupation" /></p>
-					<p>Role:<select name='Role'>
+					<p>Role: <select name='Role'>
 						<option value='Offense'>Offense</option>
 						<option value='Defense'>Defense</option>
 						<option value='Tank'>Tank</option>
 						<option value='Support'>Support</option>
 					</select></p>
-					<p>Skill:<select name='Skill'>
+					<p>Skill: <select name='Skill'>
 						<option value='1'>1</option>
 						<option value='2'>2</option>
 						<option value='3'>3</option>
