@@ -26,8 +26,10 @@ if($mysqli->connect_errno){
 <div class='nav_bar'>
 	<ul>
 		<li><a href='index.html'>Main Menu</a></li>
-		<li><a href='heroes.php'>Heroes</a></li>
-		<li><a href='players.php' class='active'>Players</a></li>
+		<li><a href='1_heroes.php'>Heroes</a></li>
+		<li><a href='2_players.php'class='active'>Players</a></li>
+		<li><a href='3_players_heroes.php'>Players' Heroes</a></li>
+		<li><a href='4_maps.php'>Maps</a></li>
 	<ul>
 </div>
 
@@ -63,10 +65,10 @@ $stmt->close();
 </div>
 
 <div>
-	<form method="post" action="players_add.php"> 
+	<form method="post" action="2_players_add.php"> 
 
 		<fieldset>
-			<legend>Player Details</legend>
+			<legend>New Player Information</legend>
 			<p>Gamer Tag: <input type="text" name="Name" /></p>
 			<p>Wins: <input type="number" name="Wins" /></p>
 			<p>Losses: <input type="number" name="Losses" /></p>
@@ -79,7 +81,7 @@ $stmt->close();
 </div>
 
 <div>
-	<form method="post" action="players_update.php">
+	<form method="post" action="2_players_update.php">
 		<fieldset>
 			<legend>Player to Update from Table</legend>
 				<p><select name="Name">
@@ -118,7 +120,7 @@ $stmt->close();
 </div>
 
 <div>
-	<form method="post" action="players_delete.php">
+	<form method="post" action="2_players_delete.php">
 		<fieldset>
 			<legend>Hero to Delete from Table</legend>
 				<select name="Name">

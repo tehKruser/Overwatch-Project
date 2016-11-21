@@ -3,24 +3,24 @@
 ini_set('display_errors', 'On');
 //Connects to the database
 $mysqli = new mysqli("oniddb.cws.oregonstate.edu","krusej-db","cNVk3SAKmS2mK3ZE","krusej-db");
-if($_POST['Name'] != ""){
+if($_POST['NameNew'] != ""){
 	if(!$mysqli || $mysqli->connect_errno){
 		echo "Connection error " . $mysqli->connect_errno . " " . $mysqli->connect_error;
 		}
 		
-	if(!($stmt = $mysqli->prepare("DELETE FROM ow_players WHERE ow_players.name = ?"))){
+	if(!($stmt = $mysqli->prepare("UPDATE ow_players SET name = ?, wins = ?, losses = ?, eliminations = ?, deaths = ? WHERE ow_players.name = ?"))){
 		echo "Prepare failed: "  . $stmt->errno . " " . $stmt->error;
 	}
-	if(!($stmt->bind_param("s",$_POST['Name']))){
+	if(!($stmt->bind_param("siiiis",$_POST['NameNew'],$_POST['Wins'],$_POST['Losses'], $_POST['Eliminations'], $_POST['Deaths'],$_POST['Name']))){
 		echo "Bind failed: "  . $stmt->errno . " " . $stmt->error;
 	}
 	if(!$stmt->execute()){
 		echo "Execute failed: "  . $stmt->errno . " " . $stmt->error;
 	} else {
-		echo "Deleted " . $stmt->affected_rows . " player from ow_players.";
+		echo "Updated " . $stmt->affected_rows . " player details in ow_players.";
 	}
 }else{
-	echo "No player selected for deletion.";
+	echo "One or more fields were not filled in! Please try again.";
 }
 ?>
 
@@ -29,12 +29,12 @@ if($_POST['Name'] != ""){
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Overwatch Database: Players (DELETE)</title>
+  <title>Overwatch Database: Players (Update)</title>
   <link rel="stylesheet" href="style-home.css" type="text/css">
 </head>
 
 <body>
-	<h3><a href='players.php'>Back to Players</a></h3>
+	<h3><a href='2_players.php'>Back to Players</a></h3>
 </body>
 
 </html>

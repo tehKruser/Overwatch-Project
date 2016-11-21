@@ -3,21 +3,21 @@
 ini_set('display_errors', 'On');
 //Connects to the database
 $mysqli = new mysqli("oniddb.cws.oregonstate.edu","krusej-db","cNVk3SAKmS2mK3ZE","krusej-db");
-if($_POST['Name'] != "" and $_POST['Occupation'] != ""){
+if($_POST['Name'] != "" and $_POST['Gametype'] != "" and $_POST['Terrain'] != ""){
 	if(!$mysqli || $mysqli->connect_errno){
 		echo "Connection error " . $mysqli->connect_errno . " " . $mysqli->connect_error;
 		}
 		
-	if(!($stmt = $mysqli->prepare("INSERT INTO ow_heroes(name, occupation, role, skill) VALUES (?,?,?,?)"))){
+	if(!($stmt = $mysqli->prepare("INSERT INTO ow_maps(name, gametype, terrain) VALUES (?,?,?)"))){
 		echo "Prepare failed: "  . $stmt->errno . " " . $stmt->error;
 	}
-	if(!($stmt->bind_param("sssi",$_POST['Name'],$_POST['Occupation'],$_POST['Role'],$_POST['Skill']))){
+	if(!($stmt->bind_param("sss",$_POST['Name'],$_POST['Gametype'],$_POST['Terrain']))){
 		echo "Bind failed: "  . $stmt->errno . " " . $stmt->error;
 	}
 	if(!$stmt->execute()){
 		echo "Execute failed: "  . $stmt->errno . " " . $stmt->error;
 	} else {
-		echo "Added " . $stmt->affected_rows . " new hero to ow_heroes.";
+		echo "Added " . $stmt->affected_rows . " new map to ow_maps.";
 	}
 }else{
 	echo "One or more fields were not filled in! Please try again.";
@@ -29,12 +29,12 @@ if($_POST['Name'] != "" and $_POST['Occupation'] != ""){
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Overwatch Database: Heroes (INSERT)</title>
+  <title>Overwatch Database: Maps (INSERT)</title>
   <link rel="stylesheet" href="style-home.css" type="text/css">
 </head>
 
 <body>
-	<h3><a href='heroes.php'>Back to Heroes</a></h3>
+	<h3><a href='4_maps.php'>Back to Maps</a></h3>
 </body>
 
 </html>
