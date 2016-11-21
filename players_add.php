@@ -8,19 +8,19 @@ if($_POST['Name'] != ""){
 		echo "Connection error " . $mysqli->connect_errno . " " . $mysqli->connect_error;
 		}
 		
-	if(!($stmt = $mysqli->prepare("DELETE FROM ow_heroes WHERE ow_heroes.name = ?"))){
+	if(!($stmt = $mysqli->prepare("INSERT INTO ow_players(name, wins, losses, eliminations, deaths) VALUES (?,?,?,?, ?)"))){
 		echo "Prepare failed: "  . $stmt->errno . " " . $stmt->error;
 	}
-	if(!($stmt->bind_param("s",$_POST['Name']))){
+	if(!($stmt->bind_param("siiii",$_POST['Name'],$_POST['Wins'],$_POST['Losses'], $_POST['Eliminations'], $_POST['Deaths']))){
 		echo "Bind failed: "  . $stmt->errno . " " . $stmt->error;
 	}
 	if(!$stmt->execute()){
 		echo "Execute failed: "  . $stmt->errno . " " . $stmt->error;
 	} else {
-		echo "Deleted " . $stmt->affected_rows . " hero from ow_heroes.";
+		echo "Added " . $stmt->affected_rows . " new player to ow_players.";
 	}
 }else{
-	echo "No hero selected for deletion.";
+	echo "Name field is not filled in! Please try again.";
 }
 ?>
 
@@ -29,12 +29,12 @@ if($_POST['Name'] != ""){
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Overwatch Database: Heroes (DELETE)</title>
+  <title>Overwatch Database: Players (INSERT)</title>
   <link rel="stylesheet" href="style-home.css" type="text/css">
 </head>
 
 <body>
-	<h3><a href='heroes.php'>Back to Heroes</a></h3>
+	<h3><a href='players.php'>Back to Players</a></h3>
 </body>
 
 </html>

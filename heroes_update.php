@@ -29,7 +29,7 @@ if($_POST['NameNew'] != "" and $_POST['Occupation'] != ""){
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Overwatch Database Heroes (Update)</title>
+  <title>Overwatch Database: Heroes (Update)</title>
   <link rel="stylesheet" href="style-home.css" type="text/css">
 </head>
 
