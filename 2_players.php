@@ -30,6 +30,8 @@ if($mysqli->connect_errno){
 		<li><a href='2_players.php'class='active'>Players</a></li>
 		<li><a href='3_players_heroes.php'>Players' Heroes</a></li>
 		<li><a href='4_maps.php'>Maps</a></li>
+		<li><a href='5_hero_maps.php'>Hero Map Locations</a></li>
+		<li><a href='6_animated_shorts.php'>Animated Shorts</a></li>
 	<ul>
 </div>
 
@@ -70,13 +72,12 @@ $stmt->close();
 		<fieldset>
 			<legend>New Player Information</legend>
 			<p>Gamer Tag: <input type="text" name="Name" /></p>
-			<p>Wins: <input type="number" name="Wins" /></p>
-			<p>Losses: <input type="number" name="Losses" /></p>
-			<p>Eliminations: <input type="number" name="Eliminations" /></p>
-			<p>Deaths: <input type="number" name="Deaths" /></p>
+			<p>Wins: <input type="number" name="Wins" value='0' min="0"/></p>
+			<p>Losses: <input type="number" name="Losses" value='0' min="0"/></p>
+			<p>Eliminations: <input type="number" name="Eliminations" value='0' min="0"/></p>
+			<p>Deaths: <input type="number" name="Deaths" value='0' min="0"/></p>
+			<p><input type="submit" value='Add Player'/></p>
 		</fieldset>
-
-		<p><input type="submit" value='Add Player'/></p>
 	</form>
 </div>
 
@@ -107,15 +108,13 @@ $stmt->close();
 				<fieldset>
 					<legend>Player Details</legend>
 					<p>Gamer Tag: <input type="text" name="NameNew" /></p>
-					<p>Wins: <input type="number" name="Wins" /></p>
-					<p>Losses: <input type="number" name="Losses" /></p>
-					<p>Eliminations: <input type="number" name="Eliminations" /></p>
-					<p>Deaths: <input type="number" name="Deaths" /></p>
+					<p>Wins: <input type="number" name="Wins" value='0' min="0"/></p>
+					<p>Losses: <input type="number" name="Losses" value='0' min="0"/></p>
+					<p>Eliminations: <input type="number" name="Eliminations" value='0' min="0"/></p>
+					<p>Deaths: <input type="number" name="Deaths" value='0' min="0"/></p>
 				</fieldset>
-				
-		</fieldset>
-		
-		<p><input type="submit" value='Update Player'/></p>
+			<p><input type="submit" value='Update Player'/></p>
+		</fieldset>		
 	</form>
 </div>
 
@@ -142,9 +141,8 @@ $stmt->close();
 					$stmt->close();
 					?>
 				</select>
-		</fieldset>
-		
-		<p><input type="submit" value='Delete Player'/></p>
+			<p><input type="submit" value='Delete Player'/></p>
+		</fieldset>		
 	</form>
 </div>
 

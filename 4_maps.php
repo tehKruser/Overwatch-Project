@@ -26,14 +26,12 @@ if($mysqli->connect_errno){
 <div class='nav_bar'>
 	<ul>
 		<li><a href='index.html'>Main Menu</a></li>
-
         <li><a href='1_heroes.php'>Heroes</a></li>
-
         <li><a href='2_players.php'>Players</a></li>
-
         <li><a href='3_players_heroes.php'>Players' Heroes</a></li>
-
         <li><a href='4_maps.php' class='active'>Maps</a></li>
+		<li><a href='5_hero_maps.php'>Hero Map Locations</a></li>
+		<li><a href='6_animated_shorts.php'>Animated Shorts</a></li>
 	<ul>
 </div>
 
@@ -79,9 +77,8 @@ $stmt->close();
 				<option value='Control'>Control</option>
 			</select></p>
 			<p>Terrain: <input type="text" name="Terrain" /></p>
+			<p><input type="submit" value='Add Map'/></p>
 		</fieldset>
-
-		<p><input type="submit" value='Add Map'/></p>
 	</form>
 </div>
 
@@ -120,10 +117,8 @@ $stmt->close();
 					</select></p>
 					<p>Terrain: <input type="text" name="Terrain" /></p>
 				</fieldset>
-				
-		</fieldset>
-		
-		<p><input type="submit" value='Update Map'/></p>
+			<p><input type="submit" value='Update Map'/></p>	
+		</fieldset>		
 	</form>
 </div>
 
@@ -150,32 +145,10 @@ $stmt->close();
 					$stmt->close();
 					?>
 				</select>
-		</fieldset>
-		
-		<p><input type="submit" value='Delete Map'/></p>
+			<p><input type="submit" value='Delete Map'/></p>
+		</fieldset>		
 	</form>
 </div>
-
-<!--
-<div>
-	<form method="post" action="HTMLexample.html">
-		<fieldset>
-			<legend>Planet Name</legend>
-			<p>Planet Name: <input type="text" name="PName" /></p>
-		</fieldset>
-		<fieldset>
-			<legend>Planet Populations</legend>
-			<p>Planet Population: <input type="text" name="PPopulation" /></p>
-		</fieldset>
-		<fieldset>
-			<legend>Laguage</legend>
-			<p>Official Language: <input type="text" name="PLanguage" /></p>
-		</fieldset>
-		<input type="submit" name="add" value="Add Planet" />
-		<input type="submit" name="update" value="Update Planet" />
-	</form>
-</div>
-!-->
 
 </body>
 </html>

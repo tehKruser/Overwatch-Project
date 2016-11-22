@@ -31,6 +31,8 @@ if($mysqli->connect_errno){
 			<li><a href='2_players.php'>Players</a></li>
 			<li><a href='3_players_heroes.php' class='active'>Players' Heroes</a></li>
 			<li><a href='4_maps.php'>Maps</a></li>
+			<li><a href='5_hero_maps.php'>Hero Map Locations</a></li>
+			<li><a href='6_animated_shorts.php'>Animated Shorts</a></li>
 		<ul>
 	</div>
 
@@ -47,7 +49,7 @@ if($mysqli->connect_errno){
 				</tr>
 
 		<?php
-		if(!($stmt = $mysqli->prepare("SELECT ow_players.name, ow_heroes.name, ow_players_heroes.eliminations, ow_players_heroes.deaths, ow_players_heroes.playtime FROM ow_players_heroes INNER JOIN ow_players ON ow_players.id = ow_players_heroes.pid INNER JOIN ow_heroes ON ow_heroes.id = ow_players_heroes.hid"))){
+		if(!($stmt = $mysqli->prepare("SELECT ow_players.name, ow_heroes.name, ow_players_heroes.eliminations, ow_players_heroes.deaths, TIME_FORMAT(ow_players_heroes.playtime, '%H hr %i min') FROM ow_players_heroes INNER JOIN ow_players ON ow_players.id = ow_players_heroes.pid INNER JOIN ow_heroes ON ow_heroes.id = ow_players_heroes.hid"))){
 			echo "Prepare failed: "  . $stmt->errno . " " . $stmt->error;
 		}
 
@@ -111,12 +113,12 @@ if($mysqli->connect_errno){
 							?>
 							
 						</select></p>
-						<p>Eliminations: <input type="number" name="Eliminations" min="0"/></p>
-						<p>Deaths: <input type="number" name="Deaths" min="0"/></p>
+						<p>Eliminations: <input type="number" name="Eliminations" value='0' min="0"/></p>
+						<p>Deaths: <input type="number" name="Deaths" value='0' min="0"/></p>
 						<fieldset>
 							<legend>Time Played on Hero</legend>
-							<p>Hours: <input type="number" name="Deaths" min="0"/></p>
-							<p>Minutes: <input type="number" name="Deaths" min="0"/></p>
+							<p>Hours: <input type="number" name="Hours" value='0' min="0"/></p>
+							<p>Minutes: <input type="number" name="Minutes" value='0' min="0" max="59"/></p>
 						</fieldset>
 					<p><input type="submit" value='Add Player-Hero Relationship'/></p>
 				</fieldset>			
@@ -167,12 +169,12 @@ if($mysqli->connect_errno){
 							?>
 							
 						</select></p>
-						<p>Eliminations: <input type="number" name="Eliminations" min="0"/></p>
-						<p>Deaths: <input type="number" name="Deaths" min="0"/></p>
+						<p>Eliminations: <input type="number" name="Eliminations" value='0' min="0"/></p>
+						<p>Deaths: <input type="number" name="Deaths" value='0' min="0"/></p>
 						<fieldset>
 							<legend>Time Played on Hero</legend>
-							<p>Hours: <input type="number" name="Deaths" min="0"/></p>
-							<p>Minutes: <input type="number" name="Deaths" min="0"/></p>
+							<p>Hours: <input type="number" name="Hours" value='0' min="0"/></p>
+							<p>Minutes: <input type="number" name="Minutes" value='0' min="0" max="59"/></p>
 						</fieldset>
 						
 						<p><input type="submit" value='Update Player-Hero Relationship'/></p>

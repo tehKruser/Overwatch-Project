@@ -14,8 +14,8 @@ $mysqli = new mysqli("oniddb.cws.oregonstate.edu","krusej-db","cNVk3SAKmS2mK3ZE"
 	$timeplayed = "'" . $_POST['Hours'] . ":" . $_POST['Minutes'] . ":00.0000000'";
 	//echo $timeplayed;
 	
-	//Insert into table
-	if(!($stmt = $mysqli->prepare("INSERT INTO ow_players_heroes(pid, hid, eliminations, deaths, playtime) VALUES (" . $pid . "," . $hid . ",?,?," . $timeplayed . ")"))){
+	//Update row
+	if(!($stmt = $mysqli->prepare("UPDATE ow_players_heroes SET eliminations = ?, deaths = ?, playtime = " . $timeplayed . " WHERE ow_players_heroes.pid = " . $pid . " AND ow_players_heroes.hid = " . $hid))){
 		echo "Prepare failed: "  . $stmt->errno . " " . $stmt->error;
 	}
 	if(!($stmt->bind_param("ii",$_POST['Eliminations'],$_POST['Deaths']))){
@@ -24,8 +24,8 @@ $mysqli = new mysqli("oniddb.cws.oregonstate.edu","krusej-db","cNVk3SAKmS2mK3ZE"
 	if(!$stmt->execute()){
 		echo "Execute failed: "  . $stmt->errno . " " . $stmt->error;
 	} else {
-		echo "Added " . $stmt->affected_rows . " new player-hero relationship to ow_players_heroes.";
-	} 
+		echo "Updated " . $stmt->affected_rows . " hero details in ow_heroes.";
+	}
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
@@ -33,7 +33,7 @@ $mysqli = new mysqli("oniddb.cws.oregonstate.edu","krusej-db","cNVk3SAKmS2mK3ZE"
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Overwatch Database: Players' Heroes (INSERT)</title>
+  <title>Overwatch Database: Players' Heroes (Update)</title>
   <link rel="stylesheet" href="style-home.css" type="text/css">
 </head>
 

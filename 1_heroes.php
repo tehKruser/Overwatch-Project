@@ -30,6 +30,8 @@ if($mysqli->connect_errno){
 		<li><a href='2_players.php'>Players</a></li>
 		<li><a href='3_players_heroes.php'>Players' Heroes</a></li>
 		<li><a href='4_maps.php'>Maps</a></li>
+		<li><a href='5_hero_maps.php'>Hero Map Locations</a></li>
+		<li><a href='6_animated_shorts.php'>Animated Shorts</a></li>
 	<ul>
 </div>
 
@@ -81,9 +83,8 @@ $stmt->close();
 				<option value='2'>2</option>
 				<option value='3'>3</option>
 			</select></p>
+			<p><input type="submit" value='Add Hero'/></p>
 		</fieldset>
-
-		<p><input type="submit" value='Add Hero'/></p>
 	</form>
 </div>
 
@@ -127,10 +128,8 @@ $stmt->close();
 						<option value='3'>3</option>
 					</select></p>
 				</fieldset>
-				
-		</fieldset>
-		
-		<p><input type="submit" value='Update Hero'/></p>
+		<p><input type="submit" value='Update Hero'/></p>				
+		</fieldset>		
 	</form>
 </div>
 
@@ -156,10 +155,10 @@ $stmt->close();
 					}
 					$stmt->close();
 					?>
+					
 				</select>
-		</fieldset>
-		
-		<p><input type="submit" value='Delete Hero'/></p>
+			<p><input type="submit" value='Delete Hero'/></p>
+		</fieldset>		
 	</form>
 </div>
 
