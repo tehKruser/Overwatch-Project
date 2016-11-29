@@ -2,23 +2,22 @@
 //Turn on error reporting
 ini_set('display_errors', 'On');
 //Connects to the database
-$mysqli = new mysqli("oniddb.cws.oregonstate.edu","krusej-db","cNVk3SAKmS2mK3ZE","krusej-db");
+	$mysqli = new mysqli("oniddb.cws.oregonstate.edu","krusej-db","cNVk3SAKmS2mK3ZE","krusej-db");
 	if(!$mysqli || $mysqli->connect_errno){
 		echo "Connection error " . $mysqli->connect_errno . " " . $mysqli->connect_error;
 	}
-	
-	$timeplayed = $_POST['Hours'] . ":" . $_POST['Minutes'] . ":00.0000000";
+
 	//Insert into table
-	if(!($stmt = $mysqli->prepare("INSERT INTO ow_players_heroes(pid, hid, eliminations, deaths, playtime) VALUES (?,?,?,?,?)"))){
+	if(!($stmt = $mysqli->prepare("INSERT INTO ow_counter_heroes(hid, chid) VALUES (?, ?)"))){
 		echo "Prepare failed: "  . $stmt->errno . " " . $stmt->error;
 	}
-	if(!($stmt->bind_param("iiiis",$_POST['Pid'],$_POST['Hid'],$_POST['Eliminations'],$_POST['Deaths'],$timeplayed))){
+	if(!($stmt->bind_param("ii",$_POST['Hid'],$_POST['Chid']))){
 		echo "Bind failed: "  . $stmt->errno . " " . $stmt->error;
 	}
 	if(!$stmt->execute()){
 		echo "Execute failed: "  . $stmt->errno . " " . $stmt->error;
 	} else {
-		echo "Added " . $stmt->affected_rows . " new player-hero relationship to ow_players_heroes.";
+		echo "Added " . $stmt->affected_rows . " new Hero-Counter Hero relationship to ow_counter_heroes.";
 	} 
 ?>
 
@@ -27,12 +26,12 @@ $mysqli = new mysqli("oniddb.cws.oregonstate.edu","krusej-db","cNVk3SAKmS2mK3ZE"
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Overwatch Database: Players' Heroes (INSERT)</title>
+  <title>Overwatch Database: Heroes-Counter Heroes (INSERT)</title>
   <link rel="stylesheet" href="style-home.css" type="text/css">
 </head>
 
 <body>
-	<h3><a href='3_players_heroes.php'>Back to Players' Heroes</a></h3>
+	<h3><a href='5_counter_heroes.php'>Back to Heroes-Counter Heroes</a></h3>
 </body>
 
 </html>

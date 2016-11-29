@@ -6,20 +6,16 @@ $mysqli = new mysqli("oniddb.cws.oregonstate.edu","krusej-db","cNVk3SAKmS2mK3ZE"
 	if(!$mysqli || $mysqli->connect_errno){
 		echo "Connection error " . $mysqli->connect_errno . " " . $mysqli->connect_error;
 		}
-	$pid = "(SELECT ow_players.id FROM ow_players WHERE ow_players.name = '" . $_POST['Pname'] ."')";
-	//echo $pid;
-	$hid = "(SELECT ow_heroes.id FROM ow_heroes WHERE ow_heroes.name = '" . $_POST['Hname'] . "')";
-	//echo $hid;
 	
 	//Delete player-hero relationship
-	if(!($stmt = $mysqli->prepare("DELETE FROM ow_players_heroes WHERE ow_players_heroes.pid = " . $pid . " AND ow_players_heroes.hid = " . $hid))){
+	if(!($stmt = $mysqli->prepare("DELETE FROM ow_players_heroes WHERE ow_players_heroes.pid = ? AND ow_players_heroes.hid = ?"))){
 		echo "Prepare failed: "  . $stmt->errno . " " . $stmt->error;
 	}
-	/*
-	if(!($stmt->bind_param("s",$_POST['Name']))){
+	
+	if(!($stmt->bind_param("ii",$_POST['Pid'],$_POST['Hid']))){
 		echo "Bind failed: "  . $stmt->errno . " " . $stmt->error;
 	}
-	*/
+	
 	if(!$stmt->execute()){
 		echo "Execute failed: "  . $stmt->errno . " " . $stmt->error;
 	} else {

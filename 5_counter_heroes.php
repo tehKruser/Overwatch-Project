@@ -14,13 +14,13 @@ if($mysqli->connect_errno){
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Overwatch Database: Players' Heroes</title>
+  <title>Overwatch Database: Hero-Counter Hero</title>
   <link rel="stylesheet" href="style-home.css" type="text/css">
   
 </head>
 <body>
 	<div class='header_bar'>
-		<h1>Overwatch Database: Players' Heroes</h1>
+		<h1>Overwatch Database: Hero-Counter Hero</h1>
 	</div>
 
 
@@ -28,9 +28,9 @@ if($mysqli->connect_errno){
 		<ul>
 			<li><a href='index.html'>Main Menu</a></li>
 			<li><a href='1_heroes.php'>Heroes</a></li>
-			<li><a href='5_counter_heroes.php'>Counter Heroes</a></li>
+			<li><a href='5_counter_heroes.php' class='active'>Counter Heroes</a></li>
 			<li><a href='2_players.php'>Players</a></li>
-			<li><a href='3_players_heroes.php' class='active'>Players' Heroes</a></li>
+			<li><a href='3_players_heroes.php'>Players' Heroes</a></li>
 			<li><a href='4_maps.php'>Maps</a></li>
 			<li><a href='6_animated_shorts.php'>Animated Shorts</a></li>
 			<li><a href='7_animated_shorts_heroes.php'>Animated Shorts-Heroes</a></li>
@@ -42,26 +42,26 @@ if($mysqli->connect_errno){
 			<!--http://overwatch.guide/!-->
 			<table class='entity_tbl'>
 				<tr>
-					<th>Gamer Tag</th>
 					<th>Hero</th>
-					<th>Eliminations</th>
-					<th>Deaths</th>
-					<th>Time Played</th>
+					<th>Counter Hero</th>
 				</tr>
 
 		<?php
-		if(!($stmt = $mysqli->prepare("SELECT ow_players.name, ow_heroes.name, ow_players_heroes.eliminations, ow_players_heroes.deaths, TIME_FORMAT(ow_players_heroes.playtime, '%H hr %i min') FROM ow_players_heroes INNER JOIN ow_players ON ow_players.id = ow_players_heroes.pid INNER JOIN ow_heroes ON ow_heroes.id = ow_players_heroes.hid"))){
+		
+		if(!($stmt = $mysqli->prepare("SELECT h.name, ch.name FROM ow_counter_heroes 
+		INNER JOIN ow_heroes as h on h.id = ow_counter_heroes.hid 
+		INNER JOIN ow_heroes as ch on ch.id = ow_counter_heroes.chid"))){
 			echo "Prepare failed: "  . $stmt->errno . " " . $stmt->error;
 		}
-
+		
 		if(!$stmt->execute()){
 			echo "Execute failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
 		}
-		if(!$stmt->bind_result($pname, $hname, $elims, $deaths, $playtime)){
+		if(!$stmt->bind_result($hname, $chname)){
 			echo "Bind failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
 		}
 		while($stmt->fetch()){
-		 echo "<tr>\n<td>" . $pname . "</td><td>" . $hname . "</td><td>" . $elims . "</td><td>" . $deaths . "</td><td>" . $playtime ."</td></tr>";
+		 echo "<tr>\n<td>" . $hname . "</td><td>" . $chname . "</td></tr>";
 		}
 		$stmt->close();
 		?>
@@ -70,30 +70,10 @@ if($mysqli->connect_errno){
 		</div>
 
 		<div>
-			<form method="post" action="3_players_heroes_add.php"> 
+			<form method="post" action="5_counter_heroes_add.php"> 
 
 				<fieldset>
-					<legend>New Player-Hero Relationship Information</legend>
-						<p>Player Name: <select name="Pid">
-							
-							<?php
-							if(!($stmt = $mysqli->prepare("SELECT ow_players.id, ow_players.name FROM ow_players"))){
-								echo "Prepare failed: "  . $stmt->errno . " " . $stmt->error;
-							}
-
-							if(!$stmt->execute()){
-								echo "Execute failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
-							}
-							if(!$stmt->bind_result($id, $name)){
-								echo "Bind failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
-							}
-							while($stmt->fetch()){
-							 echo '<option value="'. $id . '"> ' . $name . '</option>\n';
-							}
-							$stmt->close();
-							?>
-							
-						</select></p>
+					<legend>New Player-Counter Hero Relationship Information</legend>
 						<p>Hero Name: <select name="Hid">
 							
 							<?php
@@ -114,42 +94,35 @@ if($mysqli->connect_errno){
 							?>
 							
 						</select></p>
-						<p>Eliminations: <input type="number" name="Eliminations" value='0' min="0"/></p>
-						<p>Deaths: <input type="number" name="Deaths" value='0' min="0"/></p>
-						<fieldset>
-							<legend>Time Played on Hero</legend>
-							<p>Hours: <input type="number" name="Hours" value='0' min="0"/></p>
-							<p>Minutes: <input type="number" name="Minutes" value='0' min="0" max="59"/></p>
-						</fieldset>
-					<p><input type="submit" value='Add Player-Hero Relationship'/></p>
+						<p>Counter Hero Name: <select name="Chid">
+							
+							<?php
+							if(!($stmt = $mysqli->prepare("SELECT ow_heroes.id, ow_heroes.name FROM ow_heroes"))){
+								echo "Prepare failed: "  . $stmt->errno . " " . $stmt->error;
+							}
+
+							if(!$stmt->execute()){
+								echo "Execute failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
+							}
+							if(!$stmt->bind_result($id, $name)){
+								echo "Bind failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
+							}
+							while($stmt->fetch()){
+							 echo '<option value="'. $id . '"> ' . $name . '</option>\n';
+							}
+							$stmt->close();
+							?>
+							
+						</select></p>
+					<p><input type="submit" value='Add Hero-Counter Hero Relationship'/></p>
 				</fieldset>			
 			</form>
 		</div>
 
 		<div>
-			<form method="post" action="3_players_heroes_update.php">
+			<form method="post" action="5_counter_heroes_update.php">
 				<fieldset>
-					<legend>Update Player-Hero Relationship Data</legend>
-						<p>Player Name: <select name="Pid">
-							
-							<?php
-							if(!($stmt = $mysqli->prepare("SELECT ow_players.id, ow_players.name FROM ow_players"))){
-								echo "Prepare failed: "  . $stmt->errno . " " . $stmt->error;
-							}
-
-							if(!$stmt->execute()){
-								echo "Execute failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
-							}
-							if(!$stmt->bind_result($id, $name)){
-								echo "Bind failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
-							}
-							while($stmt->fetch()){
-							 echo '<option value="'. $id . '"> ' . $name . '</option>\n';
-							}
-							$stmt->close();
-							?>
-							
-						</select></p>
+					<legend>Update Hero-Counter Hero Relationship Data</legend>
 						<p>Hero Name: <select name="Hid">
 							
 							<?php
@@ -170,15 +143,54 @@ if($mysqli->connect_errno){
 							?>
 							
 						</select></p>
-						<p>Eliminations: <input type="number" name="Eliminations" value='0' min="0"/></p>
-						<p>Deaths: <input type="number" name="Deaths" value='0' min="0"/></p>
+						<p>Counter Hero Name: <select name="Chid">
+							
+							<?php
+							if(!($stmt = $mysqli->prepare("SELECT ow_heroes.id, ow_heroes.name FROM ow_heroes"))){
+								echo "Prepare failed: "  . $stmt->errno . " " . $stmt->error;
+							}
+
+							if(!$stmt->execute()){
+								echo "Execute failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
+							}
+							if(!$stmt->bind_result($id, $name)){
+								echo "Bind failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
+							}
+							while($stmt->fetch()){
+							 echo '<option value="'. $id . '"> ' . $name . '</option>\n';
+							}
+							$stmt->close();
+							?>
+							
+						</select></p>
+						
 						<fieldset>
-							<legend>Time Played on Hero</legend>
-							<p>Hours: <input type="number" name="Hours" value='0' min="0"/></p>
-							<p>Minutes: <input type="number" name="Minutes" value='0' min="0" max="59"/></p>
+							<legend>New Counter Hero</legend>
+							
+							<p>Counter Hero Name: <select name="Nchid">
+							
+							<?php
+							if(!($stmt = $mysqli->prepare("SELECT ow_heroes.id, ow_heroes.name FROM ow_heroes"))){
+								echo "Prepare failed: "  . $stmt->errno . " " . $stmt->error;
+							}
+
+							if(!$stmt->execute()){
+								echo "Execute failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
+							}
+							if(!$stmt->bind_result($id, $name)){
+								echo "Bind failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
+							}
+							while($stmt->fetch()){
+							 echo '<option value="'. $id . '"> ' . $name . '</option>\n';
+							}
+							$stmt->close();
+							?>
+							
+							</select></p>
+						
 						</fieldset>
 						
-						<p><input type="submit" value='Update Player-Hero Relationship'/></p>
+						<p><input type="submit" value='Update Hero-Counter Hero Relationship'/></p>
 				</fieldset>
 				
 				
@@ -186,29 +198,9 @@ if($mysqli->connect_errno){
 		</div>
 
 		<div>
-			<form method="post" action="3_players_heroes_delete.php">
+			<form method="post" action="5_counter_heroes_delete.php">
 				<fieldset>
-					<legend>Delete Player-Hero Relationship from Table</legend>
-						<p>Player Name: <select name="Pid">
-							
-							<?php
-							if(!($stmt = $mysqli->prepare("SELECT ow_players.id, ow_players.name FROM ow_players"))){
-								echo "Prepare failed: "  . $stmt->errno . " " . $stmt->error;
-							}
-
-							if(!$stmt->execute()){
-								echo "Execute failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
-							}
-							if(!$stmt->bind_result($id, $name)){
-								echo "Bind failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
-							}
-							while($stmt->fetch()){
-							 echo '<option value="'. $id . '"> ' . $name . '</option>\n';
-							}
-							$stmt->close();
-							?>
-							
-						</select></p>
+					<legend>Delete Hero-Counter Hero Relationship from Table</legend>
 						<p>Hero Name: <select name="Hid">
 							
 							<?php
@@ -229,8 +221,28 @@ if($mysqli->connect_errno){
 							?>
 							
 						</select></p>
+						<p>Counter Hero Name: <select name="Chid">
+							
+							<?php
+							if(!($stmt = $mysqli->prepare("SELECT ow_heroes.id, ow_heroes.name FROM ow_heroes"))){
+								echo "Prepare failed: "  . $stmt->errno . " " . $stmt->error;
+							}
+
+							if(!$stmt->execute()){
+								echo "Execute failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
+							}
+							if(!$stmt->bind_result($id, $name)){
+								echo "Bind failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
+							}
+							while($stmt->fetch()){
+							 echo '<option value="'. $id . '"> ' . $name . '</option>\n';
+							}
+							$stmt->close();
+							?>
+							
+						</select></p>
 						
-						<p><input type="submit" value='Delete Player-Hero Relationship'/></p>
+						<p><input type="submit" value='Delete Hero-Counter Hero Relationship'/></p>
 				</fieldset>
 				
 				

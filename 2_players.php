@@ -27,11 +27,12 @@ if($mysqli->connect_errno){
 	<ul>
 		<li><a href='index.html'>Main Menu</a></li>
 		<li><a href='1_heroes.php'>Heroes</a></li>
-		<li><a href='2_players.php'class='active'>Players</a></li>
+		<li><a href='5_counter_heroes.php'>Counter Heroes</a></li>
+		<li><a href='2_players.php' class='active'>Players</a></li>
 		<li><a href='3_players_heroes.php'>Players' Heroes</a></li>
 		<li><a href='4_maps.php'>Maps</a></li>
-		<li><a href='5_hero_maps.php'>Hero Map Locations</a></li>
 		<li><a href='6_animated_shorts.php'>Animated Shorts</a></li>
+		<li><a href='7_animated_shorts_heroes.php'>Animated Shorts-Heroes</a></li>
 	<ul>
 </div>
 
